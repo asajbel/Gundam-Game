@@ -1,0 +1,25 @@
+.gundam {
+	border: 1rem solid #2c62b1;
+	border-radius: .5rem;
+	width: 15rem;
+	background: white;
+	display: table-row;
+	margin: 2rem;
+}
+
+.gundam-pic {
+	height: 12rem;
+	margin: auto;
+	display: block;
+}
+
+.background-colony {
+	background-image: url("../images/Background-Colony.jpg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+	height: 100vh;
+}
+
+body {
+	background-color: black;
+}
