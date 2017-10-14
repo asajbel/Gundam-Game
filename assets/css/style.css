@@ -1,16 +1,16 @@
-.gundam {
-	border: 1rem solid #2c62b1;
+.gundam-card {
+	border: .5rem solid;
 	border-radius: .5rem;
-	width: 15rem;
 	background: white;
 	display: table-row;
+	width: 14rem;
 	margin: 2rem;
 }
 
 .gundam-pic {
-	height: 12rem;
-	margin: auto;
+	height: 9rem;
 	display: block;
+	float: left;
 }
 
 .background-colony {
@@ -18,6 +18,18 @@
 	background-repeat: no-repeat;
 	background-size: 100%;
 	height: 100vh;
+}
+
+.gundam-text {
+	float: right;
+	text-align: right;
+	font-size: 16px;
+	padding: 0 1rem 0 0;
+	width: 6.5rem;
+}
+
+p {
+	margin: .5rem 0;
 }
 
 body {
