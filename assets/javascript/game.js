@@ -13,7 +13,6 @@ function mobileSuit(name, image, health, attack, evasion) {
 	this.card.addClass("clearfix gundam-card bd-gd-grey");
 
 	this.card.attr("id", this.id);
-	this.card.attr("data", this);
 	var img = new $("<img>");
 	img.attr("src", imageFolder + image);
 	img.addClass("gundam-pic");
@@ -60,12 +59,7 @@ function mobileSuit(name, image, health, attack, evasion) {
 		$("#" + this.id +"ev").text(value);
 	};
 
-	this.card.on("click", function(event) {
-		console.log("It's coming from inside the mobileSuit");
-		console.log(event);
-		console.log($(this).attr("data"));
-	});
-
+	this.card.on("click", function(event) {	});
 
 };
 
@@ -73,49 +67,137 @@ $(document).ready(function(){
 
 	var selectedPlayer = false;
 	var selectedEnemy = false;
+	var lost = false;
+	var selected = 0;
+	var player;
+	var enemy;
+//	var enemyChoice = ["shoot", "melee", "counter"];
+	var winTable =[
+		["tie", "win", "lose"],
+		["lose", "tie", "win"],
+		["win", "lose", "tie"]];
 
 	initialize();
 
-	fazz.changeHP(720);
+	
+	$(".btn-atk").on("click", function(event) {
+		if (selectedEnemy && !lost) {
+			var playerChoice = $(this).attr("value");
+			var enemyChoice = Math.floor(Math.random(3)*3); 
+			var rps = winTable[playerChoice][enemyChoice];
+			var plAtk = $("#" + player.attr("id") + "atk").text();
+			var plHp = $("#" + player.attr("id") + "hp").text();
+			var plEv = $("#" + player.attr("id") + "ev").text();
+			var enAtk = $("#" + enemy.attr("id") + "atk").text();
+			var enHp = $("#" + enemy.attr("id") + "hp").text();
+			var enEv = $("#" + enemy.attr("id") + "ev").text();
+			console.log(rps);
 
-	$(".gundam-card").on("click", function(event) {
-		var select = $(event.currentTarget);
-		console.log(select);
-		console.log($(this).attr("data"));
-		if (!selectedPlayer){
-			select.removeClass("bd-gd-grey");
-			select.addClass("bd-gd-blue");
-			$("#player").append(select);
-			selectedPlayer = true;
-		} else if (!selectedEnemy) {
-			select.removeClass("bd-gd-grey");
-			select.addClass("bd-gd-char");
-			$("#enemy").append(select);
-			selectEnemy = true;
+			switch(rps) {
+				case "win":
+						if (!evade(enEv)) {
+							$("#" + enemy.attr("id") + "hp").text(enHp - plAtk);
+						}
+						break;
+				case "lose":
+						if (!evade(plEv)) {
+							$("#" + player.attr("id") + "hp").text(plHp - enAtk);
+						} else {
+							increaseEvasion(player, plEv);
+						}
+						break;
+				case "tie":
+						increaseEvasion(player, plEv);
+						break;
+				default:
+			}
+			if ($("#"+enemy.attr("id")+"hp").text() < 0) {
+				$("#enemy").empty();
+				$("#instructions").text("Choose your enemy Mobile Suit");
+				selectedEnemy = false;
+				if (selected == 4) {
+					$("#instructions").text("You Won! Press Restart to Try Again");
+				}
+			}
+			if ($("#"+player.attr("id")+"hp").text() <0) {
+				$("#instructions").text("You Lost. Press Restart to Try Again");
+				lost = true;
+			}
 		}
 	});
 
-	$("#shoot").on("click", function(event) {});
+	$("#restart").on("click", function(event) {
+		initialize();
+	});
+
+// choose random number between 1-1000
+// if number < evader's evasion evade is true
+	function evade(evasion) {
+		var evade = Math.floor(Math.random(1000)*1000) + 1;
+		console.log(evade);
+		return evade < evasion;
+	}
+
+	function increaseEvasion(card, evasion) {
+		if (evasion < 999) {
+			var increased = 50 + parseInt(evasion);
+			console.log(increased);
+			if (increased > 999){
+				increased = 999;
+			} 
+			$("#"+player.attr("id")+"ev").text(increased);
+		}
+	}
 
 	function initialize(){
 		selectedPlayer = false;
 		selectedEnemy = false;
+		lost = false;
+		selected = 0;
+		player = 0;
+		enemy = 0;
 		$("#select").empty();
-		$("#defenderArea").empty();
+		// $("#defenderArea").empty();
 		$("#player").empty();
 		$("#enemy").empty();
 		$("#instructions").text("Choose your Mobile Suit");
 		$("#playerAttack").text("Player Attack");
 		$("#resolve").text("Who Hit?");
 		$("#enemyAttack").text("Enemy Attack");
-		var gundam = new mobileSuit("Gundam Rx-78-2", "Rx-78-2.jpg", 540, 100, 200);
+		var gundam = new mobileSuit("Gundam Rx-78-2", "Rx-78-2.jpg", 540, 200, 200);
 		var fazz = new mobileSuit("Full Armor ZZ", "FAZZ.jpg", 960, 300, 50);
-		var wing = new mobileSuit("Wing Gundam", "Wing.png", 360, 400, 300);
+		var goufC = new mobileSuit("Gouf Custom", "Gouf_Custom.jpg", 540, 150, 250);
 		var sazabi = new mobileSuit("Sazabi", "Sazabi.png", 720, 200, 300); 
 		$("#select").append(gundam.card);
 		$("#select").append(fazz.card); 
-		$("#select").append(wing.card);
+		$("#select").append(goufC.card);
 		$("#select").append(sazabi.card);
+		console.log(selected);
+
+		$(".gundam-card").on("click", function(event) {
+		var select = $(event.currentTarget);
+		console.log(select);
+		if (!selectedPlayer){
+			select.removeClass("bd-gd-grey");
+			select.addClass("bd-gd-blue");
+			$("#player").append(select);
+			selectedPlayer = true;
+			$("#instructions").text("Choose your enemy Moblie Suit");
+			player = select;
+			selected += 1;
+			console.log(selected);
+		} else if (!selectedEnemy) {
+			select.removeClass("bd-gd-grey");
+			select.addClass("bd-gd-char");
+			$("#enemy").append(select);
+			selectedEnemy = true;
+			enemy = select;
+			$("#instructions").text("Defeat your enemy");
+			selected += 1;
+			console.log(selected);
+		}
+	});
+
 	}
 
 });

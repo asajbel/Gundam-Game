@@ -11,35 +11,52 @@
 </head>
 <body>
 	<div id="background" class="bg-space">
-		<div class="wrapper">
-			<div class="container">
-				<div id="" class="row cardH">
-					<div id="select" class="col-lg-12" align="center">
-					</div>
+		<div class="container">
+			<div id="" class="row cardH">
+				<div id="select" class="col-lg-12" align="center">
 				</div>
-				<div id="defenderArea" class="row">
+			</div>
+			<div id="defenderArea" class="row" >
+				<div id="" class="col-lg-12" align="center">
+					<h3 id="instructions" class="text-gd-white">
+						Choose your Mobile Suit
+					</h3>
 				</div>
-				<div id="battle" class="row cardH">
-					<div id="player" class="col-lg-3">
-					</div>
-					<div id="buttons" class="col-lg-6" align="center">
-						<h3 id="instructions" class="text-gd-white">
-							Choose your Mobile Suit
-						</h3>
-						<button id="shoot" class="btn btn-atk text-gd-white bg-gd-red">Ranged
-						</button>
-						<button id="melee" class="btn btn-atk text-gd-white bg-gd-char">Melee
-						</button>
-						<button id="counter" class="btn btn-atk text-gd-white bg-gd-blue">Counter
-						</button>
-						<h3 id="" class="text-gd-white">
-							<span id="playerAttack" class="text-atk">Attack</span>
-							<span id="resolve" class="text-atk">Hit?</span>
-							<span id="enemyAttack" class="text-atx">Damage</span>
-						</h3>
-					</div>
-					<div id="enemy" class="col-lg-3">
-					</div>
+			</div>
+			<div id="battle" class="row cardH">
+				<div id="player" class="col-lg-3">
+				</div>
+				<div id="buttons" class="col-lg-6" align="center">
+					<button id="shoot" value="0" class="btn btn-atk text-gd-white bg-gd-red">
+						Ranged
+					</button>
+					<button id="melee" value="0" class="btn btn-atk text-gd-white bg-gd-char">
+						Melee
+					</button>
+					<button id="counter" value="0" class="btn btn-atk text-gd-white bg-gd-blue">
+						Counter
+					</button>
+					<table id="out" class="table text-gd-white text-center">
+						<tr>
+							<td id="" class="text-atk">Attack</td>
+							<td id="" class="text-atk">Hit</td>
+							<td id="" class="text-atx">Damage</td>
+						</tr>
+						<tr>
+							<td id="playerAttack" class="text-atk">Attack</td>
+							<td id="resolve" class="text-atk">Hit?</td>
+							<td id="enemyAttack" class="text-atx">Damage</td>
+						</tr>
+					</table>
+				</div>
+				<div id="enemy" class="col-lg-3">
+				</div>
+			</div>
+			<div class="row">
+				<div id="select" class="col-lg-12" align="center">
+					<button id="restart" class="btn bg-gd-gold">
+						Restart
+					</button>
 				</div>
 			</div>
 		</div>

@@ -11,6 +11,7 @@
 	height: 9rem;
 	display: block;
 	float: left;
+	margin-left: .5rem;
 }
 
 .bg-colony, .bg-space, .bg-city {
@@ -39,7 +40,7 @@
 }
 
 .btn-atk {
-	margin: .5rem;
+	margin: 2rem .5rem .5rem .5rem;
 }
 
 .text-atk {
@@ -50,6 +51,13 @@
 	min-height: 194px;
 }
 
+.table td{
+	font-size: 24px;
+	border-style: none;
+	padding: .5rem;
+}
+
+
 /*.wrapper {
 	width: 1200px;
 	margin: auto;
@@ -59,6 +67,10 @@
     content: "";
     display: block;
     clear: both;
+}
+
+h3 {
+	padding: .5rem;
 }
 
 h6 {
