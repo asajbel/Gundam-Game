@@ -2,9 +2,9 @@
 	border: .5rem solid;
 	border-radius: .5rem;
 	background: white;
-	display: table-row;
-	width: 14rem;
-	margin: 2rem;
+	width: 15rem;
+	margin: 1rem;
+	display: inline-block;
 }
 
 .gundam-pic {
@@ -13,19 +13,56 @@
 	float: left;
 }
 
-.background-colony {
-	background-image: url("../images/Background-Colony.jpg");
+.bg-colony, .bg-space, .bg-city {
 	background-repeat: no-repeat;
-	background-size: 100%;
-	height: 100vh;
+	min-height: 100vh;
+}
+
+.bg-colony {
+	background-image: url("../images/Background-Colony.jpg");
+}
+
+.bg-space {
+	background-image: url("../images/Background-Space.jpg");
+}
+
+.bg-city {
+	background-image: url("../images/Background-City.png");
 }
 
 .gundam-text {
 	float: right;
 	text-align: right;
 	font-size: 16px;
-	padding: 0 1rem 0 0;
-	width: 6.5rem;
+	padding: .5rem .5rem 0 0;
+	width: 6rem;
+}
+
+.btn-atk {
+	margin: .5rem;
+}
+
+.text-atk {
+	margin: .5rem 2rem;
+}
+
+.cardH {
+	min-height: 194px;
+}
+
+/*.wrapper {
+	width: 1200px;
+	margin: auto;
+}*/
+
+.clearfix::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+h6 {
+	height: 34px;
 }
 
 p {
@@ -34,4 +71,5 @@ p {
 
 body {
 	background-color: black;
+	/*min-width: 1200px;*/
 }
