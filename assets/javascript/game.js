@@ -140,6 +140,7 @@ $(document).ready(function(){
 				
 				$("#instructions").text("Choose your enemy Mobile Suit");
 				selectedEnemy = false;
+				$("#select").slideDown(1000);
 				animateLose($("#" + enemy.attr("id")));
 				if (selected == 4) {
 					$("#instructions").text("You Won! Press Restart to Try Again");
@@ -214,6 +215,7 @@ $(document).ready(function(){
 		$("#enemyAttack").text("Counter beats Melee");
 		$("#out").removeClass("visible");
 		$("#out").addClass("hidden");
+		$("#select").show(); 
 		var gundam = new mobileSuit("Gundam Rx-78-2", "Rx-78-2.jpg", 540, 200, 200);
 		var fazz = new mobileSuit("Full Armor ZZ", "FAZZ.jpg", 960, 300, 50);
 		var goufC = new mobileSuit("Gouf Custom", "Gouf_Custom.jpg", 540, 150, 250);
@@ -247,6 +249,8 @@ $(document).ready(function(){
 			console.log(selected);
 			$("#out").removeClass("hidden");
 			$("#out").addClass("visible");
+			$("#select").slideUp(1000, function () {
+			});
 		}
 	});
 
