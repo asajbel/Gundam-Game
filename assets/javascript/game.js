@@ -71,11 +71,11 @@ $(document).ready(function(){
 	var selected = 0;
 	var player;
 	var enemy;
-//	var enemyChoice = ["shoot", "melee", "counter"];
 	var winTable =[
 		["tie", "lose", "win"],
 		["win", "tie", "lose"],
 		["lose", "win", "tie"]];
+	var audio = document.createElement("audio");
 
 	initialize();
 
@@ -95,6 +95,22 @@ $(document).ready(function(){
 
 			printAttack(playerChoice, $("#playerAttack"));
 			printAttack(enemyChoice, $("#enemyAttack"));
+
+			switch($(this).attr("id")) {
+				case "shoot":
+					audio.setAttribute("src", "assets/audio/beam_wiff.wav");
+					audio.play();
+					break;
+				case "melee":
+					audio.setAttribute("src", "assets/audio/saber.wav");
+					audio.play();
+					break;
+				case "counter":
+					audio.setAttribute("src", "assets/audio/counter.wav");
+					audio.play();
+					break;
+				default:
+			}
 
 			switch(rps) {
 				case "win":
@@ -141,8 +157,6 @@ $(document).ready(function(){
 		initialize();
 	});
 
-// choose random number between 1-1000
-// if number < evader's evasion evade is true
 	function evade(evasion) {
 		var evade = Math.floor(Math.random(1000)*1000) + 1;
 		console.log(evade);
@@ -192,7 +206,6 @@ $(document).ready(function(){
 		player = 0;
 		enemy = 0;
 		$("#select").empty();
-		// $("#defenderArea").empty();
 		$("#player").empty();
 		$("#enemy").empty();
 		$("#instructions").text("Choose your Mobile Suit");
