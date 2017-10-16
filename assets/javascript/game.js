@@ -73,16 +73,16 @@ $(document).ready(function(){
 	var enemy;
 //	var enemyChoice = ["shoot", "melee", "counter"];
 	var winTable =[
-		["tie", "win", "lose"],
-		["lose", "tie", "win"],
-		["win", "lose", "tie"]];
+		["tie", "lose", "win"],
+		["win", "tie", "lose"],
+		["lose", "win", "tie"]];
 
 	initialize();
 
 	
 	$(".btn-atk").on("click", function(event) {
 		if (selectedEnemy && !lost) {
-			var playerChoice = $(this).attr("value");
+			var playerChoice = parseInt($(this).attr("value"));
 			var enemyChoice = Math.floor(Math.random(3)*3); 
 			var rps = winTable[playerChoice][enemyChoice];
 			var plAtk = $("#" + player.attr("id") + "atk").text();
@@ -93,33 +93,44 @@ $(document).ready(function(){
 			var enEv = $("#" + enemy.attr("id") + "ev").text();
 			console.log(rps);
 
+			printAttack(playerChoice, $("#playerAttack"));
+			printAttack(enemyChoice, $("#enemyAttack"));
+
 			switch(rps) {
 				case "win":
 						if (!evade(enEv)) {
 							$("#" + enemy.attr("id") + "hp").text(enHp - plAtk);
+							$("#resolve").text("landed against");
+						} else {
+							$("#resolve").text("was evaded failing to use");
 						}
 						break;
 				case "lose":
 						if (!evade(plEv)) {
 							$("#" + player.attr("id") + "hp").text(plHp - enAtk);
+							$("#resolve").text("overpowered by");
 						} else {
+							$("#resolve").text("narowly escaped")
 							increaseEvasion(player, plEv);
 						}
 						break;
 				case "tie":
+						$("#resolve").text("clashed against");
 						increaseEvasion(player, plEv);
 						break;
 				default:
 			}
 			if ($("#"+enemy.attr("id")+"hp").text() < 0) {
-				$("#enemy").empty();
+				
 				$("#instructions").text("Choose your enemy Mobile Suit");
 				selectedEnemy = false;
+				animateLose($("#" + enemy.attr("id")));
 				if (selected == 4) {
 					$("#instructions").text("You Won! Press Restart to Try Again");
 				}
 			}
-			if ($("#"+player.attr("id")+"hp").text() <0) {
+			if ($("#"+player.attr("id")+"hp").text() < 0) {
+				animateLose($("#" + player.attr("id")));
 				$("#instructions").text("You Lost. Press Restart to Try Again");
 				lost = true;
 			}
@@ -149,6 +160,30 @@ $(document).ready(function(){
 		}
 	}
 
+	function printAttack(choice, locQ)	{
+		switch (choice){
+			case 0: 
+				locQ.text("Ranged");
+				break;
+			case 1:
+				locQ.text("Melee");
+				break;
+			case 2:
+				locQ.text("Counter");
+				break;
+			default:
+		}
+	}
+
+	function animateLose(locQ) {
+		locQ.animate({
+			    	opacity: 0,
+			    	bottom: "-60",
+			  	}, 2000, function() {
+			  		locQ.remove();
+			  });
+	}
+
 	function initialize(){
 		selectedPlayer = false;
 		selectedEnemy = false;
@@ -161,9 +196,11 @@ $(document).ready(function(){
 		$("#player").empty();
 		$("#enemy").empty();
 		$("#instructions").text("Choose your Mobile Suit");
-		$("#playerAttack").text("Player Attack");
-		$("#resolve").text("Who Hit?");
-		$("#enemyAttack").text("Enemy Attack");
+		$("#playerAttack").text("Ranged beats Counter");
+		$("#resolve").text("Melee beats Ranged");
+		$("#enemyAttack").text("Counter beats Melee");
+		$("#out").removeClass("visible");
+		$("#out").addClass("hidden");
 		var gundam = new mobileSuit("Gundam Rx-78-2", "Rx-78-2.jpg", 540, 200, 200);
 		var fazz = new mobileSuit("Full Armor ZZ", "FAZZ.jpg", 960, 300, 50);
 		var goufC = new mobileSuit("Gouf Custom", "Gouf_Custom.jpg", 540, 150, 250);
@@ -189,12 +226,14 @@ $(document).ready(function(){
 		} else if (!selectedEnemy) {
 			select.removeClass("bd-gd-grey");
 			select.addClass("bd-gd-char");
-			$("#enemy").append(select);
+			$("#enemy").prepend(select);
 			selectedEnemy = true;
 			enemy = select;
 			$("#instructions").text("Defeat your enemy");
 			selected += 1;
 			console.log(selected);
+			$("#out").removeClass("hidden");
+			$("#out").addClass("visible");
 		}
 	});
 

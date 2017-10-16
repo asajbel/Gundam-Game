@@ -5,6 +5,7 @@
 	width: 15rem;
 	margin: 1rem;
 	display: inline-block;
+	position: relative;
 }
 
 .gundam-pic {
@@ -57,11 +58,13 @@
 	padding: .5rem;
 }
 
+.hidden {
+	visibility: hidden;
+}
 
-/*.wrapper {
-	width: 1200px;
-	margin: auto;
-}*/
+.visible {
+	visibility: visible;
+}
 
 .clearfix::after{
     content: "";
